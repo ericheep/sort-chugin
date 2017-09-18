@@ -57,7 +57,8 @@ public:
         size = 0;
 
         position = 0;
-        iteration = 0;
+        iterator1 = 0;
+        iterator2 = 0;
         interpolation = 0;
 
         sortingType = INSERTION;
@@ -134,20 +135,22 @@ public:
 
     void initializeSamples()
     {
+        // iterator1 = 0;
+        // iterator2 = 0;
+
         switch(initialShape)
         {
-
         case RANDOM:
-            util.createRandomizedVector(samples, size);
+            util.randomizeVector(samples, size);
             break;
         case EQUALIZE:
-            util.createEqualizedVector(samples, size);
+            util.equalizeVector(samples, size);
             break;
         case SINE:
-            util.createSineSortedVector(samples, size);
+            util.sineSortVector(samples, size);
             break;
         case REVERSE:
-            util.createReverseSortedVector(samples, size);
+            util.reverseSortVector(samples, size);
             break;
 
         default:
@@ -159,9 +162,8 @@ public:
     {
         switch(sortingType)
         {
-
         case INSERTION:
-            // algorithms.insertionSort(samples, size);
+            algorithms.insertionSort(samples, size, iterator1, iterator2);
             break;
         case SELECTION:
             // algorithms.selectionSort(samples, size, iteration);
@@ -191,7 +193,7 @@ public:
 
     int getIteration()
     {
-        return iteration;
+        // return iteration;
     }
 
     SAMPLE tick (SAMPLE in)
@@ -199,14 +201,14 @@ public:
         position++;
 
         if (position > size) {
-            position = position % size;
+            position = 0;
+        }
+
+        if (position == 0) {
+            sort();
         }
 
         /*
-        // if (position == 0) {
-        //
-        sort();
-
         if (util.isSorted(samples, size)) {
             initializeSamples();
             iteration = 0;
@@ -228,7 +230,8 @@ private:
 
     int size;
     int position;
-    int iteration;
+    int iterator1;
+    int iterator2;
     int interpolation;
 
     vector<float> samples;

@@ -1,8 +1,9 @@
 Sort s;
 s => dac;
 
-s.setSine();
-s.freq(220.0);
+s.setInsertion();
+s.setRandom();
+s.freq(100.0);
 s.size() => int samples;
 
 10::second => now;

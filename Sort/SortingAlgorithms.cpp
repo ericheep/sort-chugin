@@ -12,21 +12,20 @@ SortingAlgorithms::~SortingAlgorithms()
 
 void SortingAlgorithms::insertionSort (vector<float>& v, int size, int& i, int& j)
 {
-    if (i < size) {
-        float value = v[i];
+    while (i < size) {
+        j = i;
 
-        while (j > 0 && v[j - 1] > value)
+        while (j > 0 && v[j - 1] > v[j])
         {
+            swap(v[j], v[j = 1]);
             v[j] = v[j - 1];
             j--;
-
-            return;
         }
 
         i++;
-        j = i;
-        v[j] = value;
-     }
+    }
+
+    return;
 }
 
 /*

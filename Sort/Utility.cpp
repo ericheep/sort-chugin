@@ -35,7 +35,7 @@ void Utility::shuffleVector (vector<float>& v, int size)
     }
 }
 
-void Utility::createEqualizedVector (vector<float>& v, int size)
+void Utility::equalizeVector (vector<float>& v, int size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -45,7 +45,7 @@ void Utility::createEqualizedVector (vector<float>& v, int size)
     shuffleVector(v, size);
 }
 
-void Utility::createRandomizedVector (vector<float>& v, int size)
+void Utility::randomizeVector (vector<float>& v, int size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -53,7 +53,7 @@ void Utility::createRandomizedVector (vector<float>& v, int size)
     }
 }
 
-void Utility::createSineSortedVector (vector<float>& v, int size)
+void Utility::sineSortVector (vector<float>& v, int size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -61,7 +61,7 @@ void Utility::createSineSortedVector (vector<float>& v, int size)
     }
 }
 
-void Utility::createReverseSortedVector (vector<float>& v, int size)
+void Utility::reverseSortVector (vector<float>& v, int size)
 {
     for (int i = 0; i < size; i++)
     {
