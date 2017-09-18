@@ -61,6 +61,8 @@ public:
         iterator2 = 0;
         interpolation = 0;
 
+        stepTotal = 0;
+
         sortingType = INSERTION;
         initialShape = RANDOM;
 
@@ -135,9 +137,6 @@ public:
 
     void initializeSamples()
     {
-        // iterator1 = 0;
-        // iterator2 = 0;
-
         switch(initialShape)
         {
         case RANDOM:
@@ -158,12 +157,12 @@ public:
         }
     }
 
-    void sort()
+    void sort(int& stepTotal)
     {
         switch(sortingType)
         {
         case INSERTION:
-            algorithms.insertionSort(samples, size, iterator1, iterator2);
+            algorithms.insertionSort(samples, size, stepTotal);
             break;
         case SELECTION:
             // algorithms.selectionSort(samples, size, iteration);
@@ -194,6 +193,7 @@ public:
     int getIteration()
     {
         // return iteration;
+        return 1;
     }
 
     SAMPLE tick (SAMPLE in)
@@ -205,20 +205,15 @@ public:
         }
 
         if (position == 0) {
-            sort();
+            if (util.isSorted(samples, size)) {
+                initializeSamples();
+                stepTotal = 0;
+            }
+
+            sort(stepTotal);
+            stepTotal++;
         }
 
-        /*
-        if (util.isSorted(samples, size)) {
-            initializeSamples();
-            iteration = 0;
-        } else {
-            iteration++;
-        }
-
-        // }
-        //
-        */
 
         return samples[position];
     }
@@ -233,6 +228,8 @@ private:
     int iterator1;
     int iterator2;
     int interpolation;
+
+    int stepTotal;
 
     vector<float> samples;
 

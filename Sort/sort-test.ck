@@ -2,9 +2,8 @@ Sort s;
 s => dac;
 
 s.setInsertion();
-s.setRandom();
-s.freq(100.0);
-s.size() => int samples;
+s.setEqualize();
+s.freq(50.0);
 
 10::second => now;
 

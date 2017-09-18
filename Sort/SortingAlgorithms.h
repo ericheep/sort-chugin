@@ -11,7 +11,8 @@ public:
     SortingAlgorithms();
     ~SortingAlgorithms();
 
-    void insertionSort(vector<float>& arr, int n, int& i, int& j);
+    bool stepsExceeded(int steps, int stepTotal);
+    void insertionSort(vector<float>& arr, int size, int stepTotal);
     // void selectionSort(vector<float>& arr, int n, int step);
     // void bubbleSort(vector<float>& arr, int n, int step);
 

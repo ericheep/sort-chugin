@@ -9,15 +9,32 @@ SortingAlgorithms::~SortingAlgorithms()
 {
 }
 
-
-void SortingAlgorithms::insertionSort (vector<float>& v, int size, int& i, int& j)
+bool SortingAlgorithms::stepsExceeded(int steps, int stepTotal)
 {
+    if (steps > stepTotal) return true;
+
+    return false;
+}
+
+
+void SortingAlgorithms::insertionSort (vector<float>& v, int size, int stepTotal)
+{
+    // ugen logic
+    int steps = 0;
+
+    // sorting logic
+    int i = 0;
+
     while (i < size) {
-        j = i;
+        int j = i;
 
         while (j > 0 && v[j - 1] > v[j])
         {
-            swap(v[j], v[j = 1]);
+            if (stepsExceeded(steps, stepTotal)) return;
+
+            swap(v[j], v[j - 1]);
+            steps++;
+
             v[j] = v[j - 1];
             j--;
         }
