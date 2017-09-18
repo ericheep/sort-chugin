@@ -26,7 +26,7 @@ void SortingAlgorithms::insertionSort (vector<float>& v, int size, int& i, int& 
         i++;
         j = i;
         v[j] = value;
-    }
+     }
 }
 
 /*

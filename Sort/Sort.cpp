@@ -49,12 +49,13 @@ using namespace std;
 class Sort
 {
 public:
-    Sort( t_CKFLOAT fs)
+    Sort (t_CKFLOAT fs)
     {
+        samplingFrequency = fs;
+
         freq = 0.0;
         size = 0;
 
-        samplingFrequency = fs;
         position = 0;
         iteration = 0;
         interpolation = 0;
