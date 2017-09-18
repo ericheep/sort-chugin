@@ -47,21 +47,24 @@ void Utility::createEqualizedVector (vector<float>& v, int size)
 
 void Utility::createRandomizedVector (vector<float>& v, int size)
 {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++)
+    {
         v[i] = ((double) rand() / RAND_MAX) * 2.0 - 1.0;
     }
 }
 
 void Utility::createSineSortedVector (vector<float>& v, int size)
 {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++)
+    {
         v[i] = sin((i * (1.0/size)) * (M_PI * 2.0));
     }
 }
 
 void Utility::createReverseSortedVector (vector<float>& v, int size)
 {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++)
+    {
         v[i] = (1.0 - i * (1.0/size)) * 2.0 - 1.0;
     }
 }

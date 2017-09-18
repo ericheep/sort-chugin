@@ -10,21 +10,23 @@ SortingAlgorithms::~SortingAlgorithms()
 }
 
 
-void SortingAlgorithms::insertionSort (vector<float>& arr, int n, int& i, int& j)
+void SortingAlgorithms::insertionSort (vector<float>& v, int size, int& i, int& j)
 {
-    float value = arr[i];
+    if (i < size) {
+        float value = v[i];
 
-    while (j > 0 && arr[j - 1] > value)
-    {
-        arr[j] = arr[j - 1];
-        j--;
+        while (j > 0 && v[j - 1] > value)
+        {
+            v[j] = v[j - 1];
+            j--;
 
-        return;
+            return;
+        }
+
+        i++;
+        j = i;
+        v[j] = value;
     }
-
-    i++;
-    j = i;
-    arr[j] = value;
 }
 
 /*

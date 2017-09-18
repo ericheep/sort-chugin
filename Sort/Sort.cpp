@@ -51,21 +51,27 @@ class Sort
 public:
     Sort( t_CKFLOAT fs)
     {
+        freq = 0.0;
         size = 0;
-        freq = 0;
 
-        fs = fs;
+        samplingFrequency = fs;
+        position = 0;
         iteration = 0;
         interpolation = 0;
 
-        setFreq(440.0);
         sortingType = INSERTION;
+        initialShape = RANDOM;
+
+        // populates the vector
+        setFreq(220.0);
+
+        initializeSamples();
     }
 
     float setFreq (t_CKFLOAT f)
     {
         freq = f;
-        setSize(int(fs/freq));
+        setSize(int(samplingFrequency/f));
 
         return freq;
     }
@@ -73,6 +79,20 @@ public:
     float getFreq()
     {
         return freq;
+    }
+
+    int setSize (t_CKINT s)
+    {
+        size = s;
+        samples.resize(s);
+        initializeSamples();
+
+        return size;
+    }
+
+    int getSize()
+    {
+        return size;
     }
 
     int setInterpolation (t_CKINT i)
@@ -84,20 +104,6 @@ public:
     int getInterpolation()
     {
         return interpolation;
-    }
-
-    int setSize (t_CKINT s)
-    {
-        size = s;
-        samples.resize(size);
-        initializeSamples();
-
-        return size;
-    }
-
-    int getSize()
-    {
-        return size;
     }
 
     float getPosition()
@@ -127,16 +133,21 @@ public:
 
     void initializeSamples()
     {
-        switch(initialShape) {
+        switch(initialShape)
+        {
 
         case RANDOM:
             util.createRandomizedVector(samples, size);
+            break;
         case EQUALIZE:
             util.createEqualizedVector(samples, size);
+            break;
         case SINE:
             util.createSineSortedVector(samples, size);
+            break;
         case REVERSE:
             util.createReverseSortedVector(samples, size);
+            break;
 
         default:
             break;
@@ -145,7 +156,8 @@ public:
 
     void sort()
     {
-        switch(sortingType) {
+        switch(sortingType)
+        {
 
         case INSERTION:
             // algorithms.insertionSort(samples, size);
@@ -183,10 +195,14 @@ public:
 
     SAMPLE tick (SAMPLE in)
     {
-        // m_position++;
-        // m_position = m_position % m_size;
+        position++;
 
-        // if (m_position == 0) {
+        if (position > size) {
+            position = position % size;
+        }
+
+        /*
+        // if (position == 0) {
         //
         sort();
 
@@ -198,6 +214,8 @@ public:
         }
 
         // }
+        //
+        */
 
         return samples[position];
     }
@@ -205,7 +223,7 @@ public:
 
 private:
     float freq;
-    float fs;
+    float samplingFrequency;
 
     int size;
     int position;
