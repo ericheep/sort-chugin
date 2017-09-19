@@ -39,6 +39,7 @@ CK_DLL_MFUN(sort_getPosition);
 CK_DLL_MFUN(sort_setInsertion);
 CK_DLL_MFUN(sort_setSelection);
 CK_DLL_MFUN(sort_setBubble);
+CK_DLL_MFUN(sort_setShuffle);
 
 CK_DLL_TICK(sort_tick);
 t_CKINT sort_data_offset = 0;
@@ -168,6 +169,10 @@ public:
         case BUBBLE:
             algorithms.bubbleSort(samples, size, stepTotal);
             break;
+        case SHUFFLE:
+            util.shuffleVector(samples, size);
+            stepTotal = 0;
+            break;
         default:
             break;
         }
@@ -186,6 +191,11 @@ public:
     void setBubble()
     {
         sortingType = BUBBLE;
+    }
+
+    void setShuffle()
+    {
+        sortingType = SHUFFLE;
     }
 
     int getIteration()
@@ -242,7 +252,8 @@ private:
     {
         INSERTION = 0,
         SELECTION,
-        BUBBLE
+        BUBBLE,
+        SHUFFLE
     };
 
     // enums
@@ -292,6 +303,7 @@ CK_DLL_QUERY( Sort )
     QUERY->add_mfun(QUERY, sort_setInsertion, "void", "setInsertion");
     QUERY->add_mfun(QUERY, sort_setSelection, "void", "setSelection");
     QUERY->add_mfun(QUERY, sort_setBubble, "void", "setBubble");
+    QUERY->add_mfun(QUERY, sort_setShuffle, "void", "setShuffle");
 
     // this reserves a variable in the ChucK internal class to store
     // referene to the c++ class we defined above
@@ -439,4 +451,10 @@ CK_DLL_MFUN(sort_setBubble)
 {
     Sort * s_obj = (Sort *) OBJ_MEMBER_INT(SELF, sort_data_offset);
     s_obj->setBubble();
+}
+
+CK_DLL_MFUN(sort_setShuffle)
+{
+    Sort * s_obj = (Sort *) OBJ_MEMBER_INT(SELF, sort_data_offset);
+    s_obj->setShuffle();
 }
