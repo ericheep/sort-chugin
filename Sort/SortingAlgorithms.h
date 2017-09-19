@@ -12,9 +12,9 @@ public:
     ~SortingAlgorithms();
 
     bool stepsExceeded(int steps, int stepTotal);
-    void insertionSort(vector<float>& arr, int size, int stepTotal);
-    // void selectionSort(vector<float>& arr, int n, int step);
-    // void bubbleSort(vector<float>& arr, int n, int step);
+    void insertionSort(vector<float>& v, int size, int stepTotal);
+    void selectionSort(vector<float>& v, int size, int stepTotal);
+    void bubbleSort(vector<float>& v, int size, int stepTotal);
 
 private:
 

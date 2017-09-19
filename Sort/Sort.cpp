@@ -57,8 +57,6 @@ public:
         size = 0;
 
         position = 0;
-        iterator1 = 0;
-        iterator2 = 0;
         interpolation = 0;
 
         stepTotal = 0;
@@ -165,10 +163,10 @@ public:
             algorithms.insertionSort(samples, size, stepTotal);
             break;
         case SELECTION:
-            // algorithms.selectionSort(samples, size, iteration);
+            algorithms.selectionSort(samples, size, stepTotal);
             break;
         case BUBBLE:
-            // algorithms.bubbleSort(samples, size, iteration);
+            algorithms.bubbleSort(samples, size, stepTotal);
             break;
         default:
             break;
@@ -192,8 +190,7 @@ public:
 
     int getIteration()
     {
-        // return iteration;
-        return 1;
+        return stepTotal;
     }
 
     SAMPLE tick (SAMPLE in)
