@@ -25,6 +25,10 @@ CK_DLL_MFUN(sort_setFreq);
 CK_DLL_MFUN(sort_getFreq);
 CK_DLL_MFUN(sort_setSize);
 CK_DLL_MFUN(sort_getSize);
+CK_DLL_MFUN(sort_isSorted);
+
+CK_DLL_MFUN(sort_setReinitialize);
+CK_DLL_MFUN(sort_getReinitialize);
 
 CK_DLL_MFUN(sort_setSine);
 CK_DLL_MFUN(sort_setEqualize);
@@ -56,9 +60,12 @@ public:
 
         freq = 0.0;
         size = 0;
+        sorted = false;
 
         position = 0;
         interpolation = 0;
+
+        reinitialize = true;
 
         stepTotal = 0;
 
@@ -98,6 +105,15 @@ public:
         return size;
     }
 
+    int isSorted()
+    {
+        if (sorted) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     int setInterpolation (t_CKINT i)
     {
         interpolation = i;
@@ -107,6 +123,24 @@ public:
     int getInterpolation()
     {
         return interpolation;
+    }
+
+    int setReinitialize(t_CKINT r)
+    {
+        if (r == 1) {
+            reinitialize = true;
+        } else {
+            reinitialize = false;
+        }
+        return r;
+    }
+
+    int getReinitialize()
+    {
+        if (reinitialize) {
+            return 1;
+        }
+        return 0;
     }
 
     float getPosition()
@@ -213,8 +247,14 @@ public:
 
         if (position == 0) {
             if (util.isSorted(samples, size)) {
-                initializeSamples();
+                sorted = true;
+                if (reinitialize) {
+                    initializeSamples();
+                }
                 stepTotal = 0;
+            }
+            else {
+                sorted = false;
             }
 
             sort(stepTotal);
@@ -232,11 +272,11 @@ private:
 
     int size;
     int position;
-    int iterator1;
-    int iterator2;
     int interpolation;
 
     int stepTotal;
+
+    bool sorted;
 
     vector<float> samples;
 
@@ -247,6 +287,8 @@ private:
         SINE,
         REVERSE
     };
+
+    bool reinitialize;
 
     enum SortingTypes
     {
@@ -283,10 +325,16 @@ CK_DLL_QUERY( Sort )
     QUERY->add_arg(QUERY, "float", "arg");
     QUERY->add_mfun(QUERY, sort_getFreq, "float", "freq");
 
+    QUERY->add_mfun(QUERY, sort_isSorted, "int", "sorted");
+
     QUERY->add_mfun(QUERY, sort_setEqualize, "void", "setEqualize");
     QUERY->add_mfun(QUERY, sort_setRandom, "void", "setRandom");
     QUERY->add_mfun(QUERY, sort_setSine, "void", "setSine");
     QUERY->add_mfun(QUERY, sort_setReverse, "void", "setReverse");
+
+    QUERY->add_mfun(QUERY, sort_setReinitialize, "int", "setReinitialize");
+    QUERY->add_arg(QUERY, "int", "arg");
+    QUERY->add_mfun(QUERY, sort_getReinitialize, "int", "getReinitialize");
 
     QUERY->add_mfun(QUERY, sort_setInterpolation, "int", "interpolation");
     QUERY->add_arg(QUERY, "int", "arg");
@@ -386,6 +434,23 @@ CK_DLL_MFUN(sort_getSize)
     RETURN->v_int= s_obj->getSize();
 }
 
+CK_DLL_MFUN(sort_isSorted)
+{
+    Sort * s_obj = (Sort *) OBJ_MEMBER_INT(SELF, sort_data_offset);
+    RETURN->v_int= s_obj->isSorted();
+}
+
+CK_DLL_MFUN(sort_setReinitialize)
+{
+    Sort * s_obj = (Sort *) OBJ_MEMBER_INT(SELF, sort_data_offset);
+    RETURN->v_int = s_obj->setReinitialize(GET_NEXT_INT(ARGS));
+}
+
+CK_DLL_MFUN(sort_getReinitialize)
+{
+    Sort * s_obj = (Sort *) OBJ_MEMBER_INT(SELF, sort_data_offset);
+    RETURN->v_int = s_obj->getReinitialize();
+}
 
 CK_DLL_MFUN(sort_setSine)
 {
