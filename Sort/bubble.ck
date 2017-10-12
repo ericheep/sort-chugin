@@ -14,7 +14,8 @@ if (me.args() > 0) Std.atoi(me.arg(0)) => POS;
 if (me.args() > 1) Std.atoi(me.arg(1)) => SIZE;
 if (me.args() > 2) Std.atoi(me.arg(2)) => ROOT;
 
-POS/3.0 => pan.pan;
+POS/3.0  * 2 - 1.0=> pan.pan;
+<<< pan.pan() >>>;
 
 int freqs[SIZE];
 for (0 => int i; i < SIZE; i++) {
